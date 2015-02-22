@@ -1,11 +1,11 @@
 library(data.table)
-library(plyr)
+library(dplyr)
 
 runAnalysis = function(UCIFolder) {
   readUCIFolder(UCIFolder)
   combineDataColumns()
-  renameColumnNames(test_combined, colNames)
-  renameColumnNames(train_combined, colNames)
+  testAndTrain <<- rbind(test_combined, train_combined)
+  writeActivityLabels(testAndTrain)
 }
 
 ## creates datatables as global variables for test and train datasets
@@ -29,5 +29,25 @@ renameColumnNames = function(dataFrame, columnNames) {
   numCols = length(columnNames)
   for(i in 1:numCols) {
     names(dataFrame)[i] = columnNames[i]
+  }
+}
+
+writeActivityLabels = function(testAndTrain) {
+  numRows = length(testAndTrain[,2])
+  for(i in 1:numRows) {
+    number = testAndTrain[,2][i]
+    if(number == 6) {
+      testAndTrain[,2][i] = "LAYING"
+    } else if(number == 5) {
+      testAndTrain[,2][i] = "STANDING"
+    } else if(number == 4) {
+      testAndTrain[,2][i] = "SITTING"
+    } else if(number == 3) {
+      testAndTrain[,2][i] = "WALKING_DOWNSTAIRS"
+    } else if(number == 2) {
+      testAndTrain[,2][i] = "WALKING_UPSTAIRS"
+    } else if(number == 1) {
+      testAndTrain[,2][i] = "WALKING"
+    }
   }
 }
