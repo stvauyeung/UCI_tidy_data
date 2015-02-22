@@ -1,4 +1,12 @@
 library(data.table)
+library(plyr)
+
+runAnalysis = function(UCIFolder) {
+  readUCIFolder(UCIFolder)
+  combineDataColumns()
+  renameColumnNames(test_combined, colNames)
+  renameColumnNames(train_combined, colNames)
+}
 
 ## creates datatables as global variables for test and train datasets
 readUCIFolder = function(UCIFolder) {
