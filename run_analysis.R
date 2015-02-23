@@ -6,6 +6,7 @@ runAnalysis = function(UCIFolder) {
   combineDataColumns()
   testAndTrain <<- rbind(test_combined, train_combined)
   writeActivityLabels(testAndTrain)
+  testAndTrain
 }
 
 ## creates datatables as global variables for test and train datasets
